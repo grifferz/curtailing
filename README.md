@@ -114,7 +114,7 @@ None.
 ##### Response
 A list of link objects.
 
-During development this will return a responses that include the `uuid` that's
+During development this will return responses that include the `uuid` that's
 used as a database primary key. That's unnecessary information for the user and
 will be removed at some point.
 
