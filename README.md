@@ -152,6 +152,7 @@ Things from the roadmap below that have been done.
 In rough order of how I'd like to approach things, but things might get juggled
 about.
 
+- [ ] Work out how to add tests to this thing
 - [ ] Persist DB to disk
 - [ ] Think about DB schema migrations for when the schema inevitably has to change. Maybe also for defining the initial data.
 - [ ] Add authentication for a single user; only authenticated users should be able to add links
