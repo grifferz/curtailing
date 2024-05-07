@@ -1,4 +1,4 @@
--- Create and populate dataase
+-- Create and populate database
 CREATE TABLE IF NOT EXISTS links (
     uuid VARCHAR(36) PRIMARY KEY NOT NULL,
     short VARCHAR(32) NOT NULL,
