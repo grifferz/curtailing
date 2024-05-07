@@ -1,49 +1,14 @@
 use sqlx::SqlitePool;
 
 pub async fn populate(db_pool: &SqlitePool) -> Result<(), &str> {
-    println!("->> Creating links table…");
-    match sqlx::query(
-        "CREATE TABLE IF NOT EXISTS links (\
-            uuid VARCHAR(36) PRIMARY KEY NOT NULL, \
-            short VARCHAR(32) NOT NULL, \
-            target VARCHAR(32768) NOT NULL\
-        );",
-    )
-    .execute(db_pool)
-    .await
-    {
-        Ok(result) => result,
-        Err(e) => {
-            panic!("{}", e);
-        }
-    };
+    let crate_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+    let migrations = std::path::Path::new(&crate_dir).join("./migrations");
 
-    println!("->> Creating UNIQUE index on links.short…");
-    match sqlx::query("CREATE UNIQUE INDEX short_idx on links(short);")
-        .execute(db_pool)
+    match sqlx::migrate::Migrator::new(migrations)
         .await
-    {
-        Ok(result) => result,
-        Err(e) => {
-            panic!("{}", e);
-        }
-    };
-
-    println!("->> INSERT first link…");
-    match sqlx::query(
-        "INSERT INTO links
-            (uuid, short, target)
-        VALUES (?, ?, ?)",
-    )
-    .bind("018f244b-942b-7007-927b-ace4fadf4a88")
-    .bind("6fy")
-    .bind(
-        "https://mailman.bitfolk.com/mailman/hyperkitty/list/\
-            users@mailman.bitfolk.com/message/\
-            BV6BHVJN7YL4OYN7C5Y5LRPWJKALPWY6/",
-    )
-    .execute(db_pool)
-    .await
+        .unwrap()
+        .run(db_pool)
+        .await
     {
         Ok(result) => result,
         Err(e) => {
