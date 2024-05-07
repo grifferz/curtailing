@@ -6,7 +6,7 @@ use axum::response::{IntoResponse, Response};
 use axum::routing::get_service;
 use axum::{middleware, Json, Router};
 use serde_json::json;
-use sqlx::SqlitePool;
+use sqlx::sqlite::SqlitePoolOptions;
 use tokio::net::TcpListener;
 use tower_http::services::ServeDir;
 use uuid::Uuid;
@@ -29,7 +29,12 @@ async fn main() -> Result<()> {
     let conf = env_config::load();
     //println!("{:#?}", conf);
 
-    let db_pool = SqlitePool::connect(&conf.db_url).await.unwrap();
+    let db_pool = SqlitePoolOptions::new()
+        .max_lifetime(None)
+        .idle_timeout(None)
+        .connect(&conf.db_url)
+        .await
+        .unwrap();
 
     // Put the SQLite handle into the model controller so it can be passed to all route handlers.
     let mc = ModelController::new(db_pool.clone()).await?;
