@@ -34,6 +34,10 @@ For development purposes one or more test links will be inserted into the
 in-memory database at each program start. You can see what they are with the
 `/api/all` test endpoint described below.
 
+The first `.sql` file in the `migrations/` directory shows the SQL used to
+create the initial database, and the first link that is added. You could edit
+or add to that if you want other links to always be in there.
+
 ### REST API
 
 At the moment the only thing this provides is a REST API. There is not yet any
@@ -147,6 +151,8 @@ Things from the roadmap below that have been done.
     - Minimum viable implementation: rightmost 16 bits of UUIDv7 formatted as Base58
     - Handle database collision for short links since we only have 16 bits to begin with
     - No authentication yet
+- [x] Think about DB schema migrations for when the schema inevitably has to change. Maybe also for defining the initial data.
+    - An initial migration is now run to populate the DB but little though has been put into any later migrations that may be needed. Will tackle them as the need arises.
 
 ## What we shall laughingly call a roadmap
 In rough order of how I'd like to approach things, but things might get juggled
@@ -154,7 +160,6 @@ about.
 
 - [ ] Work out how to add tests to this thing
 - [ ] Persist DB to disk
-- [ ] Think about DB schema migrations for when the schema inevitably has to change. Maybe also for defining the initial data.
 - [ ] Add authentication for a single user; only authenticated users should be able to add links
     - User will have to be manually created in the DB or other static config
     - If in static config then probably this demands more complex config file format than .env
