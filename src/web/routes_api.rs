@@ -1,6 +1,7 @@
 use crate::model::{Link, LinkForCreate, ModelController};
 use crate::Result;
 use axum::extract::{Path, State};
+use axum::http::StatusCode;
 use axum::routing::{get, post};
 use axum::{Json, Router};
 
@@ -38,12 +39,12 @@ async fn get_link(
 async fn create_link(
     State(mc): State<ModelController>,
     Json(link_fc): Json<LinkForCreate>,
-) -> Result<Json<Link>> {
+) -> Result<(StatusCode, Json<Link>)> {
     println!("->> {:<12} - create_link", "HANDLER");
 
     let link = mc.create_link(link_fc).await?;
 
-    Ok(Json(link))
+    Ok((StatusCode::CREATED, Json(link)))
 }
 
 // GET /api/all for a list of all short links (for debugging only).
