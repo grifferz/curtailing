@@ -1,15 +1,18 @@
 use sqlx::SqlitePool;
 
-pub async fn populate(db_pool: &SqlitePool) -> Result<(), &str> {
+pub async fn populate(db_pool: &SqlitePool) -> Result<(), sqlx::Error> {
     let crate_dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
-    let migrations = std::path::Path::new(&crate_dir).join("./migrations");
+    let migrations_dir = std::path::Path::new(&crate_dir).join("./migrations");
+    let m = sqlx::migrate::Migrator::new(migrations_dir).await?;
 
-    match sqlx::migrate::Migrator::new(migrations)
-        .await
-        .unwrap()
-        .run(db_pool)
-        .await
-    {
+    for migration in m.iter() {
+        println!(
+            "->> Applying DB migration version {} [{}]",
+            migration.version, migration.description
+        );
+    }
+
+    match m.run(db_pool).await {
         Ok(result) => result,
         Err(e) => {
             panic!("{}", e);
