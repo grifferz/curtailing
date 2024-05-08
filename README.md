@@ -9,7 +9,7 @@ be a good example of either Rust or a link shortener.
 ## Usage
 ### Configuration
 
-At the moment the only coniguration is through two environment variables, so
+At the moment the only configuration is through two environment variables, so
 either set those in your environment or copy `.env.sample` to `.env` and edit
 that; the `curtailing` binary will read it.
 
