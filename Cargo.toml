@@ -3,7 +3,7 @@ name = "curtailing"
 version = "0.1.0"
 edition = "2021"
 authors = [
-    "Andy Smith <andy'strugglers.net>"
+    "Andy Smith <andy@strugglers.net>"
 ]
 
 [dependencies.serde]
