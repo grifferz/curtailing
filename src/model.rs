@@ -198,7 +198,7 @@ impl ModelController {
             }
         }
 
-        return Err(Error::LinkCreateFailedTooManyCollisions);
+        Err(Error::LinkCreateFailedTooManyCollisions)
     }
 }
 
@@ -211,7 +211,7 @@ impl ModelController {
             FROM links
             WHERE short = $1",
         )
-        .bind(&short)
+        .bind(short)
         .fetch_optional(&db_pool)
         .await
         {
