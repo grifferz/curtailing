@@ -152,7 +152,7 @@ Things from the roadmap below that have been done.
     - Handle database collision for short links since we only have 16 bits to begin with
     - No authentication yet
 - [x] Think about DB schema migrations for when the schema inevitably has to change. Maybe also for defining the initial data.
-    - An initial migration is now run to populate the DB but little though has been put into any later migrations that may be needed. Will tackle them as the need arises.
+    - An initial migration is now run to populate the DB but little thought has been put into any later migrations that may be needed. Will tackle them as the need arises.
 
 ## What we shall laughingly call a roadmap
 In rough order of how I'd like to approach things, but things might get juggled
